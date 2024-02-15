@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import Container from '@/shared/container/container.vue'
-  import Logo from '@/shared/logo/logo.vue'
-  import Button from '@/shared/button/button.vue'
-  import Icon from '@/shared/icon/icon.vue'
+  import { Container } from '@/shared/container'
+  import { Logo } from '@/shared/logo'
+  import { Button } from '@/shared/button'
+  import { Icon } from '@/shared/icon'
 </script>
 
 <template>
