@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 interface Props {
   tagName: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
   bold?: boolean;
@@ -6,13 +7,12 @@ interface Props {
 }
 
 const props = defineProps<Props>() 
-
 </script>
 
 <template>
   <component
     :is="props.tagName"
-    :class="['typography', size ? `size_${size}` : '', bold ? 'bold' : '', `tag_${tagName}`]"
+    :class="['typography', props.size ? `size_${props.size}` : '', props.bold ? 'bold' : '', `tag_${props.tagName}`]"
     >
     <slot></slot>
   </component>
