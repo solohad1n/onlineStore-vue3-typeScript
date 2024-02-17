@@ -1,0 +1,1 @@
+export {default as Avatar} from '@/shared/avatar/avatar.vue'

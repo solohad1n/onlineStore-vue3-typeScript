@@ -7,7 +7,7 @@ interface Props {
   onSubmit: () => void;
   disabled?: boolean;
   size?: 'm' | 'l';
-  placeholder?: String;
+  placeholder?: string;
 }
 
 const slots = useSlots()
