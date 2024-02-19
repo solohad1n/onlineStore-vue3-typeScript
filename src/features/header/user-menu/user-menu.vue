@@ -90,4 +90,80 @@
     cursor: pointer;
     user-select: none;
   }
+
+  @media screen and (max-width: 1207px) {
+  .user-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .user-menu__list {
+    grid-column: unset;
+  }
+
+  .user-menu__name,
+  .user-menu__button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1207px) {
+  .header__container {
+    grid-gap: 20px;
+  }
+
+  .header__catalog {
+    width: unset;
+    margin-left: unset;
+  }
+
+  .header__login-btn {
+    width: max-content;
+  }
+
+  .header__login-btn:deep(.typography),
+  .header__catalog:deep(.typography) {
+    display: none;
+  }
+
+  .header__catalog:deep(.button) {
+    width: max-content;
+  }
+
+  .header__search {
+    margin-left: unset;
+  }
+
+  .header__user-menu {
+    width: 56px;
+  }
+
+  .header__user-menu:deep(.user-menu) {
+    width: max-content;
+  }
+
+  .header__navigation {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header__navigation,
+  .header__user-menu,
+  .header__catalog {
+    display: none;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__logo:deep(svg) {
+    width: 39px;
+  }
+
+  .header__search {
+    width: 100%;
+  }
+}
 </style>

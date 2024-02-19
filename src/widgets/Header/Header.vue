@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
   import { storeToRefs } from 'pinia';
+  import { useScreenStore } from '@/entities/screen'
   import { usePersonStore } from '@/entities/person'
   import { Icon, type IconType } from '@/shared/icon';
   import { Container } from '@/shared/container'
@@ -9,13 +10,14 @@
   import { Field } from '@/shared/field'
   import { Navigation } from '@/features/header/navigation'
   import { UserMenu } from '@/features/header/user-menu'
-  import avatarPNG from '@/assets/avatar.png'
   import { DropdownMenu } from '@/features/header/dropdown-menu'
 
   const personStore = usePersonStore()
   const { person, isAuth } = storeToRefs(personStore)
   const { setIsAuth } = personStore
 
+  const screenStore = useScreenStore()
+  const { platform } = storeToRefs(screenStore)
 
   const navItems = reactive<{ label: string; icon: IconType; count: number; link: string; }[]>([
     { label: 'Избранное', icon: 'favorite', count: 0, link: '/favorites' },
@@ -24,7 +26,7 @@
   ]);
 
   const userMenu = reactive({
-    avatar: avatarPNG,
+    avatar: person.value.avatar,
     name: person.value.name,
     menu: [
       { label: 'Профиль', link: '/profile' },
@@ -55,7 +57,11 @@
   <header class="header">
     <div class="header__content">
       <Container class="header__container">
-        <Logo orientation="horizontal" colorful bgColor="white" withText/>
+        <div class="header__logo">
+          <RouterLink to="/">
+            <Logo orientation="horizontal" colorful bgColor="white" :withText="platform === 'desktop'" />
+          </RouterLink>
+        </div>
         <div class="header__catalog">
           <Button color="secondary" @mouseenter="toggleDropdownVisibility">
             <template v-slot:leftIcon>
@@ -142,5 +148,66 @@
 
 .header__login-btn {
   width: 157px;
+}
+
+@media screen and (max-width: 1207px) {
+  .header__container {
+    grid-gap: 20px;
+  }
+
+  .header__catalog {
+    width: unset;
+    margin-left: unset;
+  }
+
+  .header__login-btn {
+    width: max-content;
+  }
+
+  .header__login-btn:deep(.typography),
+  .header__catalog:deep(.typography) {
+    display: none;
+  }
+
+  .header__catalog:deep(.button) {
+    width: max-content;
+  }
+
+  .header__search {
+    margin-left: unset;
+  }
+
+  .header__user-menu {
+    width: 56px;
+  }
+
+  .header__user-menu:deep(.user-menu) {
+    width: max-content;
+  }
+
+  .header__navigation {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header__navigation,
+  .header__user-menu,
+  .header__catalog {
+    display: none;
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .header__logo:deep(svg) {
+    width: 39px;
+  }
+
+  .header__search {
+    width: 100%;
+  }
 }
 </style>
