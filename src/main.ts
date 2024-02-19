@@ -1,4 +1,5 @@
 import '@/app/main.css'
+import 'vue3-carousel/dist/carousel.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
