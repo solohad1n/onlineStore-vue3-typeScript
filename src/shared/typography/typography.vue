@@ -23,6 +23,7 @@ const props = defineProps<Props>()
   .typography {
     font-style: normal;
     line-height: 150%;
+    color: var(--main-on-surface);
   }
 
   .bold {font-weight: 700;}

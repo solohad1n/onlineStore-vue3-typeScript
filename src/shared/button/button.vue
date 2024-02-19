@@ -51,6 +51,7 @@ const classes = ['button', `size_${size}`, `decoration_${decoration}`, `color_${
 
 .button.color_secondary { background-color: var(--main-secondary); }
 
+
 .button.color_secondary .button__text { color: var(--main-on-secondary); }
 
 .button.color_primary { background: var(--main-primary); }
