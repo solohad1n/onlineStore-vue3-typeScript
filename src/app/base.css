@@ -15,3 +15,7 @@ a {
   text-decoration: none;
   color: unset;
 }
+
+body {
+  background-color: var(--main-page-background);
+}
