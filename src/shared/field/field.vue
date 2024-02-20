@@ -1,41 +1,46 @@
 <script lang="ts" setup>
 import { useSlots } from 'vue';
 
-
 interface Props {
-  onChange: () => String;
-  onSubmit: () => void;
   disabled?: boolean;
   size?: 'm' | 'l';
   placeholder?: string;
 }
 
-const slots = useSlots()
-const props = defineProps<Props>()
-const {disabled = false, size = 'm', placeholder='', onChange = () => {}} = props
+const slots = useSlots();
+const props = defineProps<Props>();
+const emit = defineEmits(['onChange', 'onSubmit']);
+
+const { disabled = false, size = 'm', placeholder = '' } = props;
+const onInput = (eventTarget: EventTarget | null) => {
+  if (!eventTarget) return;
+  const value = (eventTarget as HTMLInputElement).value;
+  emit('onChange', value);
+};
 </script>
 
 <template>
   <div :class="[
-    'field',
-    `disabled_${disabled}`,
-    `size_${size}`,
+    'field', 
+    `disabled_${disabled}`, 
+    `size_${size}`, 
     `left-icon_${Boolean(slots.leftIcon)}`,
     `right-icon_${Boolean(slots.rightIcon)}`
-    ]">
+  ]">
     <slot name="label"></slot>
     <div class="field__container">
-      <div v-if="slots.leftIcon" class="field__left-icon" @click="onSubmit">
+      <div v-if="slots.leftIcon" class="field__left-icon" @click="$emit('onSubmit')">
         <slot name="leftIcon"></slot>
       </div>
       <input
-      @input="(input) => onChange(input.target.value)"
-      @keyup.enter="onSubmit"
-      class="field__input"
-      :placeholder="placeholder"
-      type="text"
-      :disabled="disabled"/>
-      <div v-if="slots.rightIcon" class="field__right-icon" @click="onSubmit">
+        class="field__input"
+        type="text"
+        @input="onInput($event.target)"
+        @keyup.enter="$emit('onSubmit')"
+        :placeholder="placeholder"
+        :disabled="disabled"
+      />
+      <div v-if="slots.rightIcon" class="field__right-icon" @click="$emit('onSubmit')">
         <slot name="rightIcon"></slot>
       </div>
     </div>
@@ -43,28 +48,27 @@ const {disabled = false, size = 'm', placeholder='', onChange = () => {}} = prop
 </template>
 
 <style scoped>
-
 .field:deep(.typography) {
   color: var(--grayscale-hard);
 }
 
-.field__container{
+.field__container {
   position: relative;
 }
 
 .field__right-icon,
-.field__left-icon{
+.field__left-icon {
   position: absolute;
   cursor: pointer;
 }
 
-.field__input{
+.field__input {
   width: 100%;
   border-radius: 4px;
   border: 1px solid var(--grayscale-light);
-  background: var(--grayscale-lightest);
+  background: var(--main-surface);
   color: var(--main-on-surface);
-  transition: .2s ease-in-out;
+  transition: .3s ease-in-out;
 }
 
 .field__input:focus {
@@ -79,41 +83,40 @@ const {disabled = false, size = 'm', placeholder='', onChange = () => {}} = prop
   background: var(--grayscale-lightest);
 }
 
-.field__input::placeholder{
+.field__input::placeholder {
   color: var(--grayscale-hard);
 }
 
-.field.size_m .field__input{
+.field.size_m .field__input {
   padding: 8px 16px;
   font-size: 16px;
 }
 
-.field.size_l .field__input{
+.field.size_l .field__input {
   padding: 12px 16px;
   font-size: 24px;
 }
 
-.field.left-icon_true.size_m .field__left-icon{
-  top: 6px;
-  left: 6px;
+.field.left-icon_true.size_m .field__left-icon {
+  top: 8px;
+  left: 8px;
 }
 
 .field.left-icon_true.size_m .field__input {
   padding-left: 40px;
 }
 
-.field.right-icon_true.size_m .field__right-icon{
-  top: 6px;
-  right: 6px;
+.field.right-icon_true.size_m .field__right-icon {
+  top: 8px;
+  right: 8px;
 }
 
 .field.right-icon_true.size_m .field__input {
   padding-right: 40px;
 }
 
-/* // */
 
-.field.left-icon_true.size_l .field__left-icon{
+.field.left-icon_true.size_l .field__left-icon {
   top: 8px;
   left: 8px;
   padding: 6px;
@@ -123,9 +126,9 @@ const {disabled = false, size = 'm', placeholder='', onChange = () => {}} = prop
   padding-left: 56px;
 }
 
-.field.right-icon_true.size_l .field__right-icon{
-  top: 6px;
-  right: 6px;
+.field.right-icon_true.size_l .field__right-icon {
+  top: 8px;
+  right: 8px;
   padding: 6px;
 }
 
